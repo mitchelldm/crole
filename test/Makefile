@@ -3,7 +3,7 @@ CC := cc
 C_FILES := $(wildcard src/*.c)
 OBJ_FILES := $(addprefix obj/,$(notdir $(C_FILES:.c=.o)))
 
-CC_FLAGS := -MMD -I../include --std=c11 -Wall -Wpedantic -Wextra -O0
+CC_FLAGS := -MMD -I../include --std=c11 -Wall -Wpedantic -Wextra -O0 -g
 LD_FLAGS := -L../ -lcrole
 
 $(shell mkdir -p obj)

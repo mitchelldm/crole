@@ -55,7 +55,7 @@ void push_ptr_front_dllist(dllist *list, void *val_ptr, dllist_err *error);
 #define push_front_dllist(list, type, val, error) push_ptr_front_dllist(list, &(type){val}, error)
 
 // Initialises a list from array, which must consist of length items of size elem_size.
-void init_dllist_from_array_sized(dllist *list, uint64_t elem_size, void *array, uint64_t length, dllist_err *error);
+void init_dllist_from_array_size(dllist *list, uint64_t elem_size, void *array, uint64_t length, dllist_err *error);
 
 // Initialises a list from array, which must consist of legth items of type type.
 #define init_dllist_from_array(list, type, array, length, error) init_dllist_from_array_sized(list, sizeof(type), array, length, error)

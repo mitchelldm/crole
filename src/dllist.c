@@ -86,9 +86,10 @@ void push_ptr_front_dllist(dllist *list, void *val_ptr, dllist_err *error)
     reset_err_dllist(*error);
 }
 
-void init_dllist_from_array_sized(dllist *list, uint64_t elem_size, void *array, uint64_t length, dllist_err *error)
+void init_dllist_from_array_size(dllist *list, uint64_t elem_size, void *array, uint64_t length, dllist_err *error)
 {
-    init_dllist(list, elem_size);
+
+    init_dllist_size(list, elem_size);
 
     for (uint64_t i = 0; i < length; i++) {
 

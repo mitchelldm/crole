@@ -116,6 +116,25 @@ void test_push_front_dllist()
     destroy_dllist(&list);
 }
 
+void test_init_dllist_from_array_size()
+{
+    test_section("Init dllist from array");
+
+    dllist_err error;
+    dllist list;
+
+    int numbers[7] = { 0, 1, 2, 3, 4, 5, 6 };
+    init_dllist_from_array_size(&list, sizeof(int), numbers, 7, &error);
+    test_assert("Correct list length", list.length == 7);
+    test_assert("Correct element size", list.size == sizeof(int));
+
+    int read_value;
+    get_dllist(&list, 2, &read_value, &error);
+    test_assert("Correct value at position", read_value == 2);
+
+    destroy_dllist(&list);
+}
+
 void test_dllist()
 {
     test tests[] = {
@@ -124,6 +143,7 @@ void test_dllist()
         &test_push_back_dllist,
         &test_push_ptr_front_dllist,
         &test_push_front_dllist,
+        &test_init_dllist_from_array_size,
         NULL
     };
     
