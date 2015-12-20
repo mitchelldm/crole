@@ -1,7 +1,7 @@
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
- 
+
 #include <dllist.h>
 
 char *translate_dllist_err(dllist_err error)
@@ -222,7 +222,7 @@ void insert_ptr_dllist(dllist *list, uint64_t pos, void *val, dllist_err *error)
     reset_err_dllist(*error);
 }
 
-void remove_dllist(dllist *list, dllist_err *error, uint64_t pos)
+void remove_dllist(dllist *list, dllist_err *error, uint64_t pos, void *out_val)
 {
     dllist_node *node = __get_node_dllist(list, pos, error);
 
@@ -231,6 +231,11 @@ void remove_dllist(dllist *list, dllist_err *error, uint64_t pos)
     }
 
     node->prev->next = node->next;
+
+    if (out_val) {
+        void *node_content = get_val_dllist_node(node);
+        memcpy(out_val, node_content, list->size);
+    }
 
     free(node);
 

@@ -30,9 +30,5 @@ clean:
 	-rm obj/*.*
 	-rm libcrole.a
 	-$(MAKE) -C test clean
-
-.PHONY: test
-test: all
-	$(MAKE) -C test 
    
 -include $(OBJ_FILES:.o=.d)

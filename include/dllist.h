@@ -1,7 +1,7 @@
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
- 
+
 #ifndef DLLIST_H
 #define DLLIST_H
 
@@ -91,11 +91,14 @@ void get_dllist(dllist *list, uint64_t pos, void *out_val, dllist_err *error);
 // Copies the last element of a dllist to out_val
 #define get_end_dllist(list, out_val, error) get_dllist(list, (list)->length - 1, out_val, error)
 
+// Inserts value at pointer into dllist at pos, moving all elements after to the next position
 void insert_ptr_dllist(dllist *list, uint64_t pos, void *val, dllist_err *error);
 
+// Inserts value into dllist at pos, moving all elements after to the next position
 #define insert_dllist(list, type, pos, val, err) insert_ptr_dllist(list, pos, &(type){val}, err)
 
-void remove_dllist(dllist *list, dllist_err *error, uint64_t pos);
+// Remove value from dllist at pos, optionally copying it to out_val if it is not NULL
+void remove_dllist(dllist *list, dllist_err *error, uint64_t pos, void *out_val);
 
 typedef struct dllist_iter {
     dllist_node *cur;
@@ -103,25 +106,36 @@ typedef struct dllist_iter {
     uint64_t size;
 } dllist_iter;
 
+// Get a forward iterator of dllist
 dllist_iter iter_dllist(dllist *list);
 
+// Get a reverse iterator of dllist
 dllist_iter rev_iter_dllist(dllist *list);
 
+// Get the next node in a forward dllist iterator
 #define next_iter_dllist(iter) ((iter).cur = (iter).cur->next)
 
+// Get the next node in a reverse dllist iterator
 #define next_rev_iter_dllist(iter) ((iter).cur = (iter).cur->prev)
 
+// Checks if a forward dllist iterator is finished
 #define more_iter_dllist(iter) ((iter).cur != (iter).end->next)
 
+// Checks if a reverse dllist iterator is finished
 #define more_rev_iter_dllist(iter) ((iter).cur != (iter).end->prev)
 
+// Returns the value at the position in the dllist of the dllist iterator
 #define get_iter_dllist(iter, type) ((type *)(get_val_dllist_node((iter).cur)))
 
+// A block that is excuted once for each node in a dllist,
+// with var assigned to the current node's value
 #define foreach_dllist(list, type, var) \
         dllist_iter var##_iter = iter_dllist(list); \
         for (type *var = get_iter_dllist(var##_iter, type); more_iter_dllist(var##_iter); \
             next_iter_dllist(var##_iter), var##_iter.cur ? var = get_iter_dllist(var##_iter, type) : 0)
 
+// A block that is excuted once for each node in a dllist in reverse,
+// with var assigned to the current node's value
 #define foreach_reverse_dllist(list, type, var) \
         dllist_iter var##_iter = rev_iter_dllist(list); \
         for (type *var = get_iter_dllist(var##_iter, type); more_rev_iter_dllist(var##_iter); \
