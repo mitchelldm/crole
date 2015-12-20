@@ -63,16 +63,28 @@ void init_dllist_from_array_sized(dllist *list, uint64_t elem_size, void *array,
 // Destroys a dllist, freeing all nodes.
 void destroy_dllist(dllist *list);
 
+// Removes value from end of a dllist
 void pop_back_dllist(dllist *list);
 
+// Removes value from start of a dllist
 void pop_front_dllist(dllist *list);
 
+// Returns a pointer to the element of a dllist at pos
 void *get_ptr_dllist(dllist *list, uint64_t pos, dllist_err *error);
 
+// Copies the element of a dllist at pos to out_val
 void get_dllist(dllist *list, uint64_t pos, void *out_val, dllist_err *error);
 
+// Returns a pointer to the first element of a dllist
+#define get_start_ptr_dllist(list, error) get_ptr_dllist(list, 0, error)
+
+// Copies the first element of a dllist to out_val
 #define get_start_dllist(list, out_val, error) get_dllist(list, 0, out_val, error)
 
+// Returns a pointer to the last element of a dllist
+#define get_end_ptr_dllist(list, error) get_ptr_dllist(list, (list)->length - 1, error)
+
+// Copies the last element of a dllist to out_val
 #define get_end_dllist(list, out_val, error) get_dllist(list, (list)->length - 1, out_val, error)
 
 void insert_ptr_dllist(dllist *list, uint64_t pos, void *val, dllist_err *error);

@@ -46,7 +46,7 @@ void push_ptr_back_dllist(dllist *list, void *val_ptr, dllist_err *error)
     if (is_err_dllist(*error)) {
         return;
     }
-    
+
     node->prev = list->end;         // Even if list is empty, making list->end NULL, this is still valid,
                                     // as the first element in a list's prev is NULL.
     node->next = NULL;
@@ -162,7 +162,7 @@ dllist_node *__get_node_dllist(dllist *list, uint64_t pos, dllist_err *error)
     }
 
     dllist_node *node = list->start;
-    
+
     for (uint64_t i = 0; i != pos; i++) {
         node = node->next;
     }
@@ -213,7 +213,7 @@ void insert_ptr_dllist(dllist *list, uint64_t pos, void *val, dllist_err *error)
 
     orig_at_pos->prev = new_node;
     before_pos->next = new_node;
-    
+
     reset_err_dllist(*error);
 }
 
@@ -243,4 +243,3 @@ dllist_iter rev_iter_dllist(dllist *list)
     dllist_iter iter = {list->end, list->start, list->size};
     return iter;
 }
-
