@@ -40,7 +40,7 @@ dllist_node *__new_dllist_node(uint64_t size, void *val_ptr, dllist_err *error)
     void *node_content = get_val_dllist_node(node_ptr);
     memcpy(node_content, val_ptr, size);
 
-    reset_err_dllist(*error);
+    reset_dllist_err(*error);
     return node_ptr;
 }
 
@@ -64,7 +64,7 @@ void push_ptr_back_dllist(dllist *list, void *val_ptr, dllist_err *error)
     list->end = node;
     list->length++;
 
-    reset_err_dllist(*error);
+    reset_dllist_err(*error);
 }
 
 void push_ptr_front_dllist(dllist *list, void *val_ptr, dllist_err *error)
@@ -87,7 +87,7 @@ void push_ptr_front_dllist(dllist *list, void *val_ptr, dllist_err *error)
     list->start = node;
     list->length++;
 
-    reset_err_dllist(*error);
+    reset_dllist_err(*error);
 }
 
 void init_dllist_from_array_size(dllist *list, uint64_t elem_size, void *array, uint64_t length, dllist_err *error)
@@ -106,7 +106,7 @@ void init_dllist_from_array_size(dllist *list, uint64_t elem_size, void *array, 
         }
     }
 
-    reset_err_dllist(*error);
+    reset_dllist_err(*error);
 }
 
 void destroy_dllist(dllist *list)
@@ -122,39 +122,7 @@ void destroy_dllist(dllist *list)
     list->end   = NULL;
 }
 
-void pop_back_dllist(dllist *list)
-{
-    dllist_node *node = list->end;
-
-    if (node) {
-        list->end = node->prev;
-
-        if (list->end)
-            list->end->next = NULL;
-    }
-
-    list->length--;
-
-    free(node);
-}
-
-void pop_front_dllist(dllist *list)
-{
-    dllist_node *node = list->start;
-
-    if (node) {
-        list->start = node->next;
-
-        if (list->start)
-            list->start->prev = NULL;
-    }
-
-    list->length--;
-
-    free(node);
-}
-
-dllist_node *__get_node_dllist(dllist *list, uint64_t pos, dllist_err *error)
+dllist_node *get_node_dllist(dllist *list, uint64_t pos, dllist_err *error)
 {
     if (pos >= list->length) {
         *error = DLLIST_OUT_OF_BOUNDS;
@@ -162,7 +130,7 @@ dllist_node *__get_node_dllist(dllist *list, uint64_t pos, dllist_err *error)
     }
 
     if (pos == list->length - 1) {
-        reset_err_dllist(*error);
+        reset_dllist_err(*error);
         return list->end;
     }
 
@@ -172,18 +140,18 @@ dllist_node *__get_node_dllist(dllist *list, uint64_t pos, dllist_err *error)
         node = node->next;
     }
 
-    reset_err_dllist(*error);
+    reset_dllist_err(*error);
     return node;
 }
 
 void *get_ptr_dllist(dllist *list, uint64_t pos, dllist_err *error)
 {
-    dllist_node *node = __get_node_dllist(list, pos, error);
+    dllist_node *node = get_node_dllist(list, pos, error);
     if (is_err_dllist(*error)) {
         return NULL;
     }
 
-    reset_err_dllist(*error);
+    reset_dllist_err(*error);
     return get_val_dllist_node(node);
 }
 
@@ -196,12 +164,12 @@ void get_dllist(dllist *list, uint64_t pos, void *out_val, dllist_err *error)
 
     memcpy(out_val, node_content, list->size);
 
-    reset_err_dllist(*error);
+    reset_dllist_err(*error);
 }
 
 void insert_ptr_dllist(dllist *list, uint64_t pos, void *val, dllist_err *error)
 {
-    dllist_node *orig_at_pos = __get_node_dllist(list, pos, error);
+    dllist_node *orig_at_pos = get_node_dllist(list, pos, error);
     if (is_err_dllist(*error)) {
         return;
     }
@@ -219,27 +187,78 @@ void insert_ptr_dllist(dllist *list, uint64_t pos, void *val, dllist_err *error)
     orig_at_pos->prev = new_node;
     before_pos->next = new_node;
 
-    reset_err_dllist(*error);
+    reset_dllist_err(*error);
+}
+
+void pop_back_dllist(dllist *list, dllist_err *error)
+{
+    dllist_node *node = list->end;
+
+    if (node) {
+        list->end = node->prev;
+
+        if (list->end) // list might be empty now
+            list->end->next = NULL;
+        else
+            list->start = NULL;
+
+        list->length--;
+        free(node);
+        reset_dllist_err(*error);
+
+    } else {
+        *error = DLLIST_POP_EMPTY;
+    }
+}
+
+void pop_front_dllist(dllist *list, dllist_err *error)
+{
+    dllist_node *node = list->start;
+
+    if (node) {
+        list->start = node->next;
+        
+        if (list->start) // list might be empty now
+            list->start->prev = NULL;
+        else
+            list->end = NULL;
+        
+        list->length--;
+        free(node);
+        reset_dllist_err(*error);
+
+    } else {
+        *error = DLLIST_POP_EMPTY;
+    }
 }
 
 void remove_dllist(dllist *list, uint64_t pos, void *out_val, dllist_err *error)
 {
-    dllist_node *node = __get_node_dllist(list, pos, error);
+    if (pos == 0) {
+        pop_front_dllist(list, error);
+    } else if (pos == list->length - 1) {
+        pop_back_dllist(list, error);
+    } else { 
 
-    if (is_err_dllist(*error)) {
-        return;
+        dllist_node *node = get_node_dllist(list, pos, error);
+        if (is_err_dllist(*error)) {
+            return;
+        }
+
+        node->prev->next = node->next;
+        node->next->prev = node->prev;
+
+        list->length--;
+
+        if (out_val) {
+            void *node_content = get_val_dllist_node(node);
+            memcpy(out_val, node_content, list->size);
+        }
+
+        free(node);
     }
 
-    node->prev->next = node->next;
-
-    if (out_val) {
-        void *node_content = get_val_dllist_node(node);
-        memcpy(out_val, node_content, list->size);
-    }
-
-    free(node);
-
-    reset_err_dllist(*error);
+    reset_dllist_err(*error);
 }
 
 dllist_iter iter_dllist(dllist *list)

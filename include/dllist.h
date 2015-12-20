@@ -11,16 +11,17 @@
 #include <stdio.h>
 
 typedef enum {
-    DLLIST_NO_ERR               = 0,
-    DLLIST_OUT_OF_BOUNDS        = -1,
-    DLLIST_MALLOC_FAIL          = -2
+    DLLIST_NO_ERR         = 0,
+    DLLIST_OUT_OF_BOUNDS  = -1,
+    DLLIST_MALLOC_FAIL    = -2,
+    DLLIST_POP_EMPTY      = -3
 } dllist_err;
 
 char *translate_dllist_err(dllist_err error);
 
 #define is_err_dllist(error) ((error) != DLLIST_NO_ERR)
 
-#define reset_err_dllist(error) ((error) = DLLIST_NO_ERR)
+#define reset_dllist_err(error) ((error) = DLLIST_NO_ERR)
 
 // The value contained in each node is allocated immediately after the node itself.
 // This is done for efficiency, to avoid having to do two malloc/free calls rather than just one.
@@ -68,10 +69,10 @@ void init_dllist_from_array_size(dllist *list, uint64_t elem_size, void *array, 
 void destroy_dllist(dllist *list);
 
 // Removes value from end of a dllist
-void pop_back_dllist(dllist *list);
+void pop_back_dllist(dllist *list, dllist_err *error);
 
 // Removes value from start of a dllist
-void pop_front_dllist(dllist *list);
+void pop_front_dllist(dllist *list, dllist_err *error);
 
 // Returns a pointer to the element of a dllist at pos
 void *get_ptr_dllist(dllist *list, uint64_t pos, dllist_err *error);

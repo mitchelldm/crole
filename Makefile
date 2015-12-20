@@ -12,7 +12,7 @@ CC_FLAGS := -MMD -Iinclude --std=c11 -Wall -Wpedantic -Wextra
 ifeq ($(mode), release)
 	CC_FLAGS += -O3
 else
-	CC_FLAGS += -O0
+	CC_FLAGS += -O0 -g
 endif
 
 $(shell mkdir -p obj)
