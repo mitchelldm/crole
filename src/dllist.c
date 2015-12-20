@@ -222,7 +222,7 @@ void insert_ptr_dllist(dllist *list, uint64_t pos, void *val, dllist_err *error)
     reset_err_dllist(*error);
 }
 
-void remove_dllist(dllist *list, dllist_err *error, uint64_t pos, void *out_val)
+void remove_dllist(dllist *list, uint64_t pos, void *out_val, dllist_err *error)
 {
     dllist_node *node = __get_node_dllist(list, pos, error);
 

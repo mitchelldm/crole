@@ -98,7 +98,7 @@ void insert_ptr_dllist(dllist *list, uint64_t pos, void *val, dllist_err *error)
 #define insert_dllist(list, type, pos, val, err) insert_ptr_dllist(list, pos, &(type){val}, err)
 
 // Remove value from dllist at pos, optionally copying it to out_val if it is not NULL
-void remove_dllist(dllist *list, dllist_err *error, uint64_t pos, void *out_val);
+void remove_dllist(dllist *list, uint64_t pos, void *out_val, dllist_err *error);
 
 typedef struct dllist_iter {
     dllist_node *cur;

@@ -30,5 +30,6 @@ clean:
 	-rm obj/*.*
 	-rm libcrole.a
 	-$(MAKE) -C test clean
+	-$(MAKE) -C bench clean
    
 -include $(OBJ_FILES:.o=.d)
