@@ -32,7 +32,7 @@ typedef struct dllist_node {
     // T node_contents
 } dllist_node;
 
-#define get_val_dllist_node(node) (node ? (uint8_t *)node + sizeof(dllist_node) : NULL)
+#define get_val_dllist_node(node) ((uint8_t *)node + sizeof(dllist_node))
 
 typedef struct dllist {
     dllist_node *start;
@@ -119,27 +119,24 @@ dllist_iter rev_iter_dllist(dllist *list);
 // Get the next node in a reverse dllist iterator
 #define next_rev_iter_dllist(iter) ((iter).cur = (iter).cur->prev)
 
-// Checks if a forward dllist iterator is finished
-#define more_iter_dllist(iter) ((iter).cur != (iter).end->next)
-
-// Checks if a reverse dllist iterator is finished
-#define more_rev_iter_dllist(iter) ((iter).cur != (iter).end->prev)
+// Checks if a forward iterator is finished
+#define more_iter_dllist(iter) ((iter).cur)
 
 // Returns the value at the position in the dllist of the dllist iterator
-#define get_iter_dllist(iter, type) ((type *)(get_val_dllist_node((iter).cur)))
+#define get_iter_dllist(iter, type) ((type *)get_val_dllist_node((iter).cur))
 
 // A block that is excuted once for each node in a dllist,
-// with var assigned to the current node's value
+// with var assigned to a pointer to the current node's value
 #define foreach_dllist(list, type, var) \
         dllist_iter var##_iter = iter_dllist(list); \
         for (type *var = get_iter_dllist(var##_iter, type); more_iter_dllist(var##_iter); \
-            next_iter_dllist(var##_iter), var##_iter.cur ? var = get_iter_dllist(var##_iter, type) : 0)
+            next_iter_dllist(var##_iter), var = get_iter_dllist(var##_iter, type))
 
 // A block that is excuted once for each node in a dllist in reverse,
-// with var assigned to the current node's value
+// with var assigned to a pointer to the current node's value
 #define foreach_reverse_dllist(list, type, var) \
         dllist_iter var##_iter = rev_iter_dllist(list); \
-        for (type *var = get_iter_dllist(var##_iter, type); more_rev_iter_dllist(var##_iter); \
-            next_rev_iter_dllist(var##_iter), var##_iter.cur ? var = get_iter_dllist(var##_iter, type) : 0)
+        for (type *var = get_iter_dllist(var##_iter, type); more_iter_dllist(var##_iter); \
+            next_rev_iter_dllist(var##_iter), var = get_iter_dllist(var##_iter, type))
 
 #endif
