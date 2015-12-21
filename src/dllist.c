@@ -261,12 +261,10 @@ void remove_dllist(dllist *list, uint64_t pos, void *out_val, dllist_err *error)
 
 dllist_iter iter_dllist(dllist *list)
 {
-    dllist_iter iter = {list->start, list->end, list->size};
-    return iter;
+    return (dllist_iter){list->start, list->end};
 }
 
 dllist_iter rev_iter_dllist(dllist *list)
 {
-    dllist_iter iter = {list->end, list->start, list->size};
-    return iter;
+    return (dllist_iter){list->end, list->start};
 }

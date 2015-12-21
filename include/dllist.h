@@ -37,12 +37,12 @@ typedef struct dllist_node {
 typedef struct dllist {
     dllist_node *start;
     dllist_node *end;
-    uint64_t length;
-    uint64_t size;
+    uint_fast16_t length;
+    uint_fast32_t size;
 } dllist;
 
 // Intialises a dllist with elements of size size.
-void init_dllist_size(dllist *list, uint64_t size);
+void init_dllist_size(dllist *list, uint_fast16_t size);
 
 // Intialises a dllist with elements of type type.
 #define init_dllist(list, type) init_dllist_size(list, sizeof(type))
@@ -60,7 +60,7 @@ void push_ptr_front_dllist(dllist *list, void *val_ptr, dllist_err *error);
 #define push_front_dllist(list, type, val, error) push_ptr_front_dllist(list, &(type){val}, error)
 
 // Initialises a list from array, which must consist of length items of size elem_size.
-void init_dllist_from_array_size(dllist *list, uint64_t elem_size, void *array, uint64_t length, dllist_err *error);
+void init_dllist_from_array_size(dllist *list, uint_fast16_t elem_size, void *array, uint_fast32_t length, dllist_err *error);
 
 // Initialises a list from array, which must consist of legth items of type type.
 #define init_dllist_from_array(list, type, array, length, error) init_dllist_from_array_sized(list, sizeof(type), array, length, error)
@@ -75,10 +75,10 @@ void pop_back_dllist(dllist *list, dllist_err *error);
 void pop_front_dllist(dllist *list, dllist_err *error);
 
 // Returns a pointer to the element of a dllist at pos
-void *get_ptr_dllist(dllist *list, uint64_t pos, dllist_err *error);
+void *get_ptr_dllist(dllist *list, uint_fast32_t pos, dllist_err *error);
 
 // Copies the element of a dllist at pos to out_val
-void get_dllist(dllist *list, uint64_t pos, void *out_val, dllist_err *error);
+void get_dllist(dllist *list, uint_fast32_t pos, void *out_val, dllist_err *error);
 
 // Returns a pointer to the first element of a dllist
 #define get_start_ptr_dllist(list, error) get_ptr_dllist(list, 0, error)
@@ -93,18 +93,17 @@ void get_dllist(dllist *list, uint64_t pos, void *out_val, dllist_err *error);
 #define get_end_dllist(list, out_val, error) get_dllist(list, (list)->length - 1, out_val, error)
 
 // Inserts value at pointer into dllist at pos, moving all elements after to the next position
-void insert_ptr_dllist(dllist *list, uint64_t pos, void *val, dllist_err *error);
+void insert_ptr_dllist(dllist *list, uint_fast32_t pos, void *val, dllist_err *error);
 
 // Inserts value into dllist at pos, moving all elements after to the next position
 #define insert_dllist(list, type, pos, val, err) insert_ptr_dllist(list, pos, &(type){val}, err)
 
 // Remove value from dllist at pos, optionally copying it to out_val if it is not NULL
-void remove_dllist(dllist *list, uint64_t pos, void *out_val, dllist_err *error);
+void remove_dllist(dllist *list, uint_fast32_t pos, void *out_val, dllist_err *error);
 
 typedef struct dllist_iter {
     dllist_node *cur;
     dllist_node *end;
-    uint64_t size;
 } dllist_iter;
 
 // Get a forward iterator of dllist
