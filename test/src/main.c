@@ -3,8 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 #include "test_globals.h"
-
-void test_dllist();
+#include "tests.h"
 
 void run_tests(test *tests)
 {
@@ -14,7 +13,11 @@ void run_tests(test *tests)
 
 int main()
 {
-    test tests[] = { &test_dllist, NULL };
+    test tests[] = {
+    	&test_dllist,
+    	&test_ref,
+    	NULL
+    };
     
     run_tests(tests);
     

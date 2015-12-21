@@ -2,8 +2,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-#ifndef DLLIST_H
-#define DLLIST_H
+#ifndef CROLE_DLLIST_H
+#define CROLE_DLLIST_H
 
 #include <stdint.h>
 #include <stdlib.h>

@@ -3,6 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 #include "test_globals.h"
+#include "tests.h"
 
 #include <crole/dllist.h>
 
@@ -145,6 +146,8 @@ void test_init_dllist_from_array_size()
 
 void test_dllist()
 {
+    printf("\n========== crole_dllist ==========\n");
+
     test tests[] = {
         &test_init_dllist_size,
         &test_push_ptr_back_dllist,
