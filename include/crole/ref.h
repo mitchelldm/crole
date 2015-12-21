@@ -9,7 +9,7 @@ typedef struct crole_ref {
     void *value;
 } crole_ref;
 
-crole_ref *crole_init_ref(crole_ref *ref, void *ptr, void (*destructor)(void *));
+void crole_init_ref(crole_ref *ref, void *ptr, void (*destructor)(void *));
 
 void *crole_enter_ref(crole_ref *ref);
 

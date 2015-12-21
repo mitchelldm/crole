@@ -19,7 +19,7 @@ uint64_t tests_failed;
 #define ANSI_COLOUR_GREEN   "\x1b[32m"
 #define ANSI_COLOUR_RESET   "\x1b[0m"
 
-#define test_section(name) char test_section_name[] = name; printf("\nBeginning section: %s\n", test_section_name);
+#define test_section(name) char test_section_name[] = name; printf("\nSection: %s\n", test_section_name);
 
 #define test_assert(test_name, expression) do { \
         if (!(expression)) { \

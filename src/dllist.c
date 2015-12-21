@@ -6,18 +6,23 @@
 
 char *crole_translate_dllist_err(crole_dllist_err error)
 {
+    static char no_err[]        = "CROLE_DLLIST_NO_ERR";
+    static char out_of_bounds[] = "CROLE_DLLIST_OUT_OF_BOUNDS";
+    static char malloc_fail[]   = "CROLE_DLLIST_MALLOC_FAIL";
+    static char unknown[]       = "CROLE_DLLIST_UNKNOWN_ERR";
+
     switch (error) {
         case CROLE_DLLIST_NO_ERR:
-            return "CROLE_DLLIST_NO_ERR";
+            return no_err;
 
         case CROLE_DLLIST_OUT_OF_BOUNDS:
-            return "CROLE_DLLIST_OUT_OF_BOUNDS";
+            return out_of_bounds;
 
         case CROLE_DLLIST_MALLOC_FAIL:
-            return "CROLE_DLLIST_MALLOC_FAIL";
+            return malloc_fail;
 
         default:
-            return "CROLE_DLLIST_UNKNOWN_ERR";
+            return unknown;
     }
 }
 

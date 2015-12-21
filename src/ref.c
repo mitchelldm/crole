@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-crole_ref *crole_init_ref(crole_ref *ref, void *ptr, void (*destructor)(void *))
+void crole_init_ref(crole_ref *ref, void *ptr, void (*destructor)(void *))
 {
     ref->destructor = destructor;
     ref->ref_count = 0;
