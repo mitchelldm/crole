@@ -14,7 +14,7 @@ Generated using [this](http://mrsharpoblunto.github.io/foswig.js) name generator
 
 `run-tests.sh` to build in debug mode and run tests
 
-`run-benchmarks.sh` to build in debug mode and run benchmarks (requires a C++ compiler)
+`run-benchmarks.sh` to build in release mode and run benchmarks (requires a C++ compiler)
 
 # License
 Crole is licensed under the Mozilla Public License v2, meaning you can use it in open source or proprietary programs provided you publish modifications made to Crole.
