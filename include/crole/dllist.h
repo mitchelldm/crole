@@ -37,8 +37,8 @@ typedef struct crole_dllist_node {
 typedef struct crole_dllist {
     crole_dllist_node *start;
     crole_dllist_node *end;
-    uint_fast16_t length;
-    uint_fast32_t size;
+    size_t length;
+    uint_fast16_t size;
 } crole_dllist;
 
 // Intialises a dllist with elements of size size.
@@ -60,7 +60,7 @@ void crole_push_ptr_front_dllist(crole_dllist *list, void *val_ptr, crole_dllist
 #define crole_push_front_dllist(list, type, val, error) crole_push_ptr_front_dllist(list, &(type){val}, error)
 
 // Initialises a list from array, which must consist of length items of size elem_size.
-void crole_init_dllist_from_array_size(crole_dllist *list, uint_fast16_t elem_size, void *array, uint_fast32_t length, crole_dllist_err *error);
+void crole_init_dllist_from_array_size(crole_dllist *list, uint_fast16_t elem_size, void *array, size_t length, crole_dllist_err *error);
 
 // Initialises a list from array, which must consist of legth items of type type.
 #define crole_init_dllist_from_array(list, type, array, length, error) crole_init_dllist_from_array_sized(list, sizeof(type), array, length, error)
@@ -75,10 +75,10 @@ void crole_pop_back_dllist(crole_dllist *list, crole_dllist_err *error);
 void crole_pop_front_dllist(crole_dllist *list, crole_dllist_err *error);
 
 // Returns a pointer to the element of a dllist at pos
-void *crole_get_ptr_dllist(crole_dllist *list, uint_fast32_t pos, crole_dllist_err *error);
+void *crole_get_ptr_dllist(crole_dllist *list, size_t pos, crole_dllist_err *error);
 
 // Copies the element of a dllist at pos to out_val
-void crole_get_dllist(crole_dllist *list, uint_fast32_t pos, void *out_val, crole_dllist_err *error);
+void crole_get_dllist(crole_dllist *list, size_t pos, void *out_val, crole_dllist_err *error);
 
 // Returns a pointer to the first element of a dllist
 #define crole_get_start_ptr_dllist(list, error) crole_get_ptr_dllist(list, 0, error)
@@ -93,13 +93,13 @@ void crole_get_dllist(crole_dllist *list, uint_fast32_t pos, void *out_val, crol
 #define crole_get_end_dllist(list, out_val, error) crole_get_dllist(list, (list)->length - 1, out_val, error)
 
 // Inserts value at pointer into dllist at pos, moving all elements after to the next position
-void crole_insert_ptr_dllist(crole_dllist *list, uint_fast32_t pos, void *val, crole_dllist_err *error);
+void crole_insert_ptr_dllist(crole_dllist *list, size_t pos, void *val, crole_dllist_err *error);
 
 // Inserts value into dllist at pos, moving all elements after to the next position
 #define crole_insert_dllist(list, type, pos, val, err) crole_insert_ptr_dllist(list, pos, &(type){val}, err)
 
 // Remove value from dllist at pos, optionally copying it to out_val if it is not NULL
-void crole_remove_dllist(crole_dllist *list, uint_fast32_t pos, void *out_val, crole_dllist_err *error);
+void crole_remove_dllist(crole_dllist *list, size_t pos, void *out_val, crole_dllist_err *error);
 
 typedef struct dllist_iter {
     crole_dllist_node *cur;

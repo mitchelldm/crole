@@ -5,8 +5,8 @@
 
 typedef struct crole_ref {
     void (*destructor)(void *);
-    _Atomic uint_fast16_t ref_count;
     void *value;
+    _Atomic uint_fast16_t ref_count;
 } crole_ref;
 
 void crole_init_ref(crole_ref *ref, void *ptr, void (*destructor)(void *));

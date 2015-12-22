@@ -94,12 +94,12 @@ void crole_push_ptr_front_dllist(crole_dllist *list, void *val_ptr, crole_dllist
     crole_reset_dllist_err(*error);
 }
 
-void crole_init_dllist_from_array_size(crole_dllist *list, uint64_t elem_size, void *array, uint_fast32_t length, crole_dllist_err *error)
+void crole_init_dllist_from_array_size(crole_dllist *list, uint_fast16_t elem_size, void *array, size_t length, crole_dllist_err *error)
 {
 
     crole_init_dllist_size(list, elem_size);
 
-    for (uint64_t i = 0; i < length; i++) {
+    for (size_t i = 0; i < length; i++) {
 
         void *val_ptr = (uint8_t *)array + (i * elem_size);
 
@@ -126,7 +126,7 @@ void crole_destroy_dllist(crole_dllist *list)
     list->end   = NULL;
 }
 
-crole_dllist_node *crole_get_node_dllist(crole_dllist *list, uint64_t pos, crole_dllist_err *error)
+crole_dllist_node *crole_get_node_dllist(crole_dllist *list, size_t pos, crole_dllist_err *error)
 {
     if (pos >= list->length) {
         *error = CROLE_DLLIST_OUT_OF_BOUNDS;
@@ -140,7 +140,7 @@ crole_dllist_node *crole_get_node_dllist(crole_dllist *list, uint64_t pos, crole
 
     crole_dllist_node *node = list->start;
 
-    for (uint64_t i = 0; i != pos; i++) {
+    for (size_t i = 0; i != pos; i++) {
         node = node->next;
     }
 
@@ -148,7 +148,7 @@ crole_dllist_node *crole_get_node_dllist(crole_dllist *list, uint64_t pos, crole
     return node;
 }
 
-void *crole_get_ptr_dllist(crole_dllist *list, uint_fast32_t pos, crole_dllist_err *error)
+void *crole_get_ptr_dllist(crole_dllist *list, size_t pos, crole_dllist_err *error)
 {
     crole_dllist_node *node = crole_get_node_dllist(list, pos, error);
     if (crole_is_err_dllist(*error)) {
@@ -159,7 +159,7 @@ void *crole_get_ptr_dllist(crole_dllist *list, uint_fast32_t pos, crole_dllist_e
     return crole_get_val_dllist_node(node);
 }
 
-void crole_get_dllist(crole_dllist *list, uint_fast32_t pos, void *out_val, crole_dllist_err *error)
+void crole_get_dllist(crole_dllist *list, size_t pos, void *out_val, crole_dllist_err *error)
 {
     void *node_content = crole_get_ptr_dllist(list, pos, error);
     if (crole_is_err_dllist(*error)) {
@@ -171,7 +171,7 @@ void crole_get_dllist(crole_dllist *list, uint_fast32_t pos, void *out_val, crol
     crole_reset_dllist_err(*error);
 }
 
-void crole_insert_ptr_dllist(crole_dllist *list, uint_fast32_t pos, void *val, crole_dllist_err *error)
+void crole_insert_ptr_dllist(crole_dllist *list, size_t pos, void *val, crole_dllist_err *error)
 {
     crole_dllist_node *orig_at_pos = crole_get_node_dllist(list, pos, error);
     if (crole_is_err_dllist(*error)) {
@@ -236,7 +236,7 @@ void crole_pop_front_dllist(crole_dllist *list, crole_dllist_err *error)
     }
 }
 
-void crole_remove_dllist(crole_dllist *list, uint_fast32_t pos, void *out_val, crole_dllist_err *error)
+void crole_remove_dllist(crole_dllist *list, size_t pos, void *out_val, crole_dllist_err *error)
 {
     if (pos == 0)
         crole_pop_front_dllist(list, error);
