@@ -17,7 +17,7 @@ typedef enum {
     CROLE_DLLIST_POP_EMPTY      = -3
 } crole_dllist_err;
 
-char *crole_translate_dllist_err(crole_dllist_err error);
+const char *crole_translate_dllist_err(crole_dllist_err error);
 
 #define crole_is_err_dllist(error) ((error) != CROLE_DLLIST_NO_ERR)
 

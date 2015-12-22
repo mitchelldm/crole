@@ -4,12 +4,12 @@
 
 #include <crole/dllist.h>
 
-char *crole_translate_dllist_err(crole_dllist_err error)
+const char *crole_translate_dllist_err(crole_dllist_err error)
 {
-    static char no_err[]        = "CROLE_DLLIST_NO_ERR";
-    static char out_of_bounds[] = "CROLE_DLLIST_OUT_OF_BOUNDS";
-    static char malloc_fail[]   = "CROLE_DLLIST_MALLOC_FAIL";
-    static char unknown[]       = "CROLE_DLLIST_UNKNOWN_ERR";
+    static const char no_err[]        = "CROLE_DLLIST_NO_ERR";
+    static const char out_of_bounds[] = "CROLE_DLLIST_OUT_OF_BOUNDS";
+    static const char malloc_fail[]   = "CROLE_DLLIST_MALLOC_FAIL";
+    static const char unknown[]       = "CROLE_DLLIST_UNKNOWN_ERR";
 
     switch (error) {
         case CROLE_DLLIST_NO_ERR:
