@@ -1,0 +1,15 @@
+* text=auto
+
+*.c text
+*.cpp text
+*.rs text
+*.h text
+Makefile text
+*.sh text
+*.toml text
+*.json text
+*.md text
+*.sln text eol=crlf
+*.vcxproj text eol=crlf
+*.vcxproj.filters text eol=crlf
+*.gitignore text

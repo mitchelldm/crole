@@ -8,6 +8,9 @@ Currently contains
 Generated using [this](http://mrsharpoblunto.github.io/foswig.js) name generator.
 
 # Building
+
+## Linux
+
 `make` to build in debug mode
 
 `make mode=release` to build in optimised release mode
@@ -15,6 +18,14 @@ Generated using [this](http://mrsharpoblunto.github.io/foswig.js) name generator
 `run-tests.sh` to build in debug mode and run tests
 
 `run-benchmarks.sh` to build in release mode and run benchmarks (requires a C++ compiler)
+
+GCC 5.3 and Clang 3.6 are supported
+
+## Windows
+
+Use proj/vs/crole.sln
+
+Visual Studio 2015 is supported
 
 # License
 Crole is licensed under the Mozilla Public License v2, meaning you can use it in open source or proprietary programs provided you publish modifications made to Crole.

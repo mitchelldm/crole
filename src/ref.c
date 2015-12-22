@@ -12,25 +12,30 @@ void crole_init_ref(crole_ref *ref, void *ptr, void (*destructor)(void *))
     ref->destructor = destructor;
     ref->ref_count = 0;
     ref->value = ptr;
+	mtx_init(&ref->lock, mtx_plain);
 }
 
 void *crole_enter_ref(crole_ref *ref)
 {
+	mtx_lock(&ref->lock);
     ref->ref_count++;
+	mtx_unlock(&ref->lock);
 
     return ref->value;
 }
 
 void crole_leave_ref(crole_ref *ref)
 {
+	mtx_lock(&ref->lock);
     ref->ref_count--;
+	mtx_unlock(&ref->lock);
 
     if (ref->ref_count == 0) {
         ref->destructor(ref->value);
     }
 }
 
-void crole_generic_destructor_ref(void *ptr)
+void crole_destroy_ref(crole_ref *ref)
 {
-    free(ptr);
+	mtx_destroy(&ref->lock);
 }

@@ -6,11 +6,14 @@
 #define CROLE_REF_H
 
 #include <stdint.h>
+#include <tinycthread.h>
+
 
 typedef struct crole_ref {
     void (*destructor)(void *);
     void *value;
-    _Atomic uint_fast16_t ref_count;
+    uint_fast16_t ref_count;
+	mtx_t lock;
 } crole_ref;
 
 void crole_init_ref(crole_ref *ref, void *ptr, void (*destructor)(void *));
@@ -19,6 +22,6 @@ void *crole_enter_ref(crole_ref *ref);
 
 void crole_leave_ref(crole_ref *ref);
 
-void crole_generic_destructor_ref(void *ptr);
+void crole_destroy_ref(crole_ref *ref);
 
 #endif
