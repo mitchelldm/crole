@@ -13,17 +13,17 @@ if ARGUMENTS.get('mode', 0) == "release":
 else:
 	env.Append(CCFLAGS = "-g -O0")
 
-# Libs
-libs = ["crole"]
-if platform.system() != "Windows":
-	libs.append("pthread")
-
 # Crole itself
 crole_src = ["dllist.c", "ref.c"]
 crole_src_files = map(lambda name: "src/" + name, crole_src)
 crole_src_files.extend(["external/tinycthread/source/tinycthread.c"])
 crole_static = env.StaticLibrary(target = "crole", source = crole_src_files)
-#crole_shared = env.SharedLibrary(target = "crole", source = crole_src_files)
+crole_shared = env.SharedLibrary(target = "crole", source = crole_src_files)
+
+# Libs
+libs = [crole_static]
+if platform.system() != "Windows":
+	libs.append("pthread")
 
 # Crole tests
 crole_test_src = ["main.c", "test_dllist.c", "test_ref.c"]
@@ -41,5 +41,5 @@ env.AlwaysBuild(bench_alias)
 
 # Install
 env.Install("/usr/local/lib", crole_static)
-#env.Install("/usr/local/lib", crole_shared)
+env.Install("/usr/local/lib", crole_shared)
 env.Alias("install", "/usr/local/lib")
