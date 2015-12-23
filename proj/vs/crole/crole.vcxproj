@@ -22,11 +22,13 @@
     <ClCompile Include="..\..\..\external\tinycthread\source\tinycthread.c" />
     <ClCompile Include="..\..\..\src\dllist.c" />
     <ClCompile Include="..\..\..\src\ref.c" />
+    <ClCompile Include="..\..\..\src\vec.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\external\tinycthread\source\tinycthread.h" />
     <ClInclude Include="..\..\..\include\crole\dllist.h" />
     <ClInclude Include="..\..\..\include\crole\ref.h" />
+    <ClInclude Include="..\..\..\include\crole\vec.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8BC9D8D2-F39B-48F2-BDEA-7EB826D40986}</ProjectGuid>

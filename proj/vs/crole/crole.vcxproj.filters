@@ -24,6 +24,9 @@
     <ClCompile Include="..\..\..\external\tinycthread\source\tinycthread.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\vec.c">
+      <Filter>Header Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\crole\dllist.h">
@@ -34,6 +37,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\external\tinycthread\source\tinycthread.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\crole\vec.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

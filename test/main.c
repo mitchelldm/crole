@@ -17,7 +17,7 @@ int main()
     test tests[] = {
     	&test_dllist,
     	&test_ref,
-        //&test_vec,
+        &test_vec,
     	NULL
     };
     
