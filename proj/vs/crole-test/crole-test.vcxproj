@@ -19,12 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\test\src\main.c" />
-    <ClCompile Include="..\..\..\test\src\test_dllist.c" />
-    <ClCompile Include="..\..\..\test\src\test_ref.c" />
+    <ClCompile Include="..\..\..\test\main.c" />
+    <ClCompile Include="..\..\..\test\test_dllist.c" />
+    <ClCompile Include="..\..\..\test\test_ref.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\test\src\tests.h" />
+    <ClInclude Include="..\..\..\test\tests.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{5B873696-6C5B-4DFE-94CC-51F29D142199}</ProjectGuid>

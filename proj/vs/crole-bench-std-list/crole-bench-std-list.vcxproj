@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\bench\src\bench-std-list.cpp" />
+    <ClCompile Include="..\..\..\bench\bench-std-list.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C25B4C62-722B-4D78-BA4A-95AFCF70C0E6}</ProjectGuid>

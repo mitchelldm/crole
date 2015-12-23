@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\bench\src\bench-std-list.cpp">
+    <ClCompile Include="..\..\..\bench\bench-std-list.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
