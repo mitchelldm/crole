@@ -1,0 +1,1 @@
+SConscript("crole.scons", variant_dir="build", duplicate=0)

@@ -3,6 +3,7 @@ Generic library of data structures and convenience functions for C.
 
 Currently contains
   * A type-generic doubly linked list
+  * A type-generic reference counting implementation
 
 #### The name?
 Generated using [this](http://mrsharpoblunto.github.io/foswig.js) name generator.
@@ -11,13 +12,10 @@ Generated using [this](http://mrsharpoblunto.github.io/foswig.js) name generator
 
 ## Linux
 
-`make` to build in debug mode
-
-`make mode=release` to build in optimised release mode
-
-`run-tests.sh` to build in debug mode and run tests
-
-`run-benchmarks.sh` to build in release mode and run benchmarks (requires a C++ compiler)
+`scons` to build
+`scons test` to build and run tests
+`scons bench` to build and run benchmarks
+Specifiy `mode=release` to build an optimised build
 
 GCC 5.3 and Clang 3.6 are supported
 
