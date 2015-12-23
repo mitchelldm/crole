@@ -15,9 +15,15 @@ uint64_t tests_failed;
 // __FILE__ gives full path to file, we only want file name
 #define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
 
-#define ANSI_COLOUR_RED     "\x1b[31m"
-#define ANSI_COLOUR_GREEN   "\x1b[32m"
-#define ANSI_COLOUR_RESET   "\x1b[0m"
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32)
+#   define ANSI_COLOUR_RED   ""
+#   define ANSI_COLOUR_GREEN ""
+#   define ANSI_COLOUR_RESET ""
+#else
+#   define ANSI_COLOUR_RED   "\x1b[31m"
+#   define ANSI_COLOUR_GREEN "\x1b[32m"
+#   define ANSI_COLOUR_RESET "\x1b[0m"
+#endif
 
 #define test_section(name) char test_section_name[] = name; printf("\nSection: %s\n", test_section_name)
 

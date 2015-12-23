@@ -4,7 +4,7 @@ env = Environment()
 
 # Compiler arguments
 env.Append(CPPPATH = ["include", "external/tinycthread/source"])
-env.Append(CCFLAGS = ["-Wall", "-Wpedantic", "-Wextra"])
+env.Append(CCFLAGS = ["-Wall", "-Wpedantic", "-Wextra", "-Werror"])
 env.Append(CFLAGS = ["--std=c11"])
 env.Append(CXXFLAGS = ["--std=c++14"])
 
@@ -21,9 +21,7 @@ crole_static = env.StaticLibrary(target = "crole", source = crole_src_files)
 crole_shared = env.SharedLibrary(target = "crole", source = crole_src_files)
 
 # Libs
-libs = [crole_static]
-if platform.system() != "Windows":
-	libs.append("pthread")
+libs = [crole_static, "pthread"]
 
 # Crole tests
 crole_test_src = ["main.c", "test_dllist.c", "test_ref.c"]
