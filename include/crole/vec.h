@@ -44,7 +44,7 @@ void crole_append_ptr_vec(crole_vec *vec, void *val_ptr);
 
 void *crole_get_ptr_vec(crole_vec *vec, size_t position);
 
-void *crole_get_vec(crole_vec *vec, size_t position, void *out_ptr);
+void crole_get_vec(crole_vec *vec, size_t position, void *out_ptr);
 
 void crole_set_ptr_vec(crole_vec *vec, size_t position, void *val_ptr);
 

@@ -1,5 +1,7 @@
 #include <crole/vec.h>
 
+#include <string.h>
+
 const char *crole_translate_vec_err(crole_vec_err error)
 {
     static const char no_err[] = "CROLE_VEC_NO_ERR";
@@ -41,32 +43,31 @@ void crole_append_ptr_vec(crole_vec *vec, void *val_ptr)
         vec->allocated *= 2;
         vec->array = realloc(vec->array, vec->size * vec->allocated);
     }
-    memcpy(((uint8_t *)vec->array) + (vec->length++ * vec->size), val_ptr, vec->size);
+    void *entry = crole_get_ptr_vec(vec, vec->length++);
+    memcpy(entry, val_ptr, vec->size);
 }
 
 void *crole_get_ptr_vec(crole_vec *vec, size_t position)
 {
     if (position < vec->length) {
-        return ((uint8_t)vec->array) + (position * vec->size);
+        return ((uint8_t *)vec->array) + (position * vec->size);
     } else return NULL; // error
 }
 
-void *crole_get_vec(crole_vec *vec, size_t position, void *out_ptr)
+void crole_get_vec(crole_vec *vec, size_t position, void *out_ptr)
 {
-    if (position < vec->length) {
-        memcpy(out_ptr, ((uint8_t)vec->array) + (position * vec->size), vec->size);
-    } else {
-        // error
-    }
+    void *entry = crole_get_ptr_vec(vec, position);
+    if (entry)
+        memcpy(out_ptr, entry, vec->size);
+    else { /* error */ }
 }
 
 void crole_set_ptr_vec(crole_vec *vec, size_t position, void *val_ptr)
 {
-    if (position < vec->length) {
-        memcpy(((uint8_t *)vec->array) + (position * vec->size), val_ptr, vec->size);
-    } else {
-        // error
-    }
+    void *entry = crole_get_ptr_vec(vec, position);
+    if (entry)
+        memcpy(entry, val_ptr, vec->size);
+    else { /* error */}
 }
 
 void crole_pop_vec(crole_vec *vec)

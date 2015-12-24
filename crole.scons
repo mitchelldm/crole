@@ -4,7 +4,10 @@
 
 import os, os.path, platform
 
+
 env = Environment()
+
+env['ENV']['TERM'] = os.environ['TERM'] # Enable colors in build logs
 
 # Compiler arguments
 env.Append(CPPPATH = ["include", "external/tinycthread/source"])
