@@ -49,38 +49,43 @@ void crole_append_ptr_vec(crole_vec *vec, void *val_ptr)
 
 void *crole_get_ptr_vec(crole_vec *vec, size_t position)
 {
-    if (position < vec->length) {
+    //if (position < vec->length) {
         return ((uint8_t *)vec->array) + (position * vec->size);
-    } else return NULL; // error
+    //} else return NULL; // error
 }
 
 void crole_get_vec(crole_vec *vec, size_t position, void *out_ptr)
 {
     void *entry = crole_get_ptr_vec(vec, position);
-    if (entry)
+    //if (entry)
         memcpy(out_ptr, entry, vec->size);
-    else { /* error */ }
+    //else { /* error */ }
 }
 
 void crole_set_ptr_vec(crole_vec *vec, size_t position, void *val_ptr)
 {
     void *entry = crole_get_ptr_vec(vec, position);
-    if (entry)
+    //if (entry)
         memcpy(entry, val_ptr, vec->size);
-    else { /* error */}
+    //else { /* error */}
 }
 
 void crole_pop_vec(crole_vec *vec)
 {
-    if (vec->length > 0) {
+    //if (vec->length > 0) {
         vec->length--;
-    } else {
+    //} else {
         // error
-	}
+	//}
 }
 
 void crole_shrink_vec(crole_vec *vec)
 {
     vec->allocated = vec->length;
     vec->array = realloc(vec->array, vec->size * vec->allocated);
+}
+
+void crole_destroy_vec(crole_vec *vec)
+{
+    free(vec->array);
 }

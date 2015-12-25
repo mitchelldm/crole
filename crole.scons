@@ -16,9 +16,9 @@ env.Append(CFLAGS = ["--std=c11"])
 env.Append(CXXFLAGS = ["--std=c++14"])
 
 if ARGUMENTS.get('mode', 0) == "release":
-	env.Append(CCFLAGS = "-O3")
+	env.Append(CCFLAGS = ["-O3"])
 else:
-	env.Append(CCFLAGS = "-g -O0")
+	env.Append(CCFLAGS = ["-g", "-O0"])
 
 # Crole itself
 crole_src = ["dllist.c", "ref.c", "vec.c"]
@@ -41,6 +41,9 @@ env.AlwaysBuild(test_alias)
 benchmarks = []
 benchmarks.append(env.Program(target = "bench-dllist", source = ["bench/bench-dllist.c"], LIBS = libs, LIBPATH = "."))
 benchmarks.append(env.Program(target = "bench-std-list", source = ["bench/bench-std-list.cpp"]))
+benchmarks.append(env.Program(target = "bench-vec", source = ["bench/bench-vec.c"], LIBS = libs, LIBPATH = "."))
+benchmarks.append(env.Program(target = "bench-std-vector", source = ["bench/bench-std-vector.cpp"]))
+#benchmarks.append(env.Program(target = "bench-kvec", source = ["bench/bench-kvec.c"]))
 bench_alias = Alias("bench", benchmarks, map(lambda bench_name: "time {}".format(bench_name[0].abspath), benchmarks))
 env.AlwaysBuild(bench_alias)
 

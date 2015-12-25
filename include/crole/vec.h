@@ -28,7 +28,7 @@ typedef struct {
     uint_fast16_t size;
 } crole_vec;
 
-#define CROLE_VEC_DEFAULT_START_ALLOC 3
+#define CROLE_VEC_DEFAULT_START_ALLOC 2
 
 void crole_init_vec_size_length(crole_vec *vec, uint_fast16_t size, size_t length);
 
@@ -53,5 +53,7 @@ void crole_set_ptr_vec(crole_vec *vec, size_t position, void *val_ptr);
 void crole_pop_vec(crole_vec *vec);
 
 void crole_shrink_vec(crole_vec *vec);
+
+void crole_destroy_vec(crole_vec *vec);
 
 #endif
