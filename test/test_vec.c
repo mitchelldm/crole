@@ -46,4 +46,3 @@ void test_vec()
 
     run_tests(tests);
 }
-
