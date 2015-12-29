@@ -21,7 +21,7 @@ Generated using [this](http://mrsharpoblunto.github.io/foswig.js) name generator
 
 Specifiy `mode=release` to build an optimised build
 
-GCC 5.3 and Clang 3.6 are supported
+GCC 5.3 and Clang 3.7 are supported
 
 ## Windows
 
