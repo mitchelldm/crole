@@ -1,12 +1,12 @@
 /* This Source Code Form is subject to the terms of the Mozilla Public
-* License, v. 2.0. If a copy of the MPL was not distributed with this
-* file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 #ifndef CROLE_VEC_H
 #define CROLE_VEC_H
 
 #include <stdlib.h>
-#include <stdint.h>
+#include <stdio.h>
 
 typedef enum {
     CROLE_VEC_NO_ERR = 0,
@@ -17,43 +17,92 @@ typedef enum {
 
 const char *crole_translate_vec_err(crole_vec_err error);
 
+char crole_set_vec_err(crole_vec_err *error, crole_vec_err err_type);
+
 #define crole_is_err_vec(error) ((error) != CROLE_VEC_NO_ERR)
 
 #define crole_reset_vec_err(error) ((error) = CROLE_VEC_NO_ERR)
 
-typedef struct {
-    void *array;
-    size_t allocated;
-    size_t length;
-    uint_fast16_t size;
-} crole_vec;
+#define crole_declare_vec(type) \
+    typedef struct { \
+        type *array; \
+        size_t allocated; \
+        size_t length; \
+    } crole_vec_##type
 
-#define CROLE_VEC_DEFAULT_START_ALLOC 2
+#define crole_vec(type) struct crole_vec_##type
 
-void crole_init_vec_size_length(crole_vec *vec, uint_fast16_t size, size_t length);
+#define crole_resize_array_vec(vec, type, error) do { \
+        void *new_array = realloc((vec).array, sizeof(type) * (vec).allocated); \
+        if (new_array) \
+            (vec).array = new_array; \
+        else error = CROLE_VEC_MALLOC_FAIL; \
+    } while (0)
 
-#define crole_init_vec_length(vec, type, length) crole_init_vec_size_length(vec, sizeof(type), length)
+#define crole_init_vec(vec, type, error) do { \
+        (vec).allocated = 2; \
+        (vec).length = 0; \
+        (vec).array = malloc(sizeof(type) * (vec).allocated); \
+        if (!(vec).array) \
+            error = CROLE_VEC_MALLOC_FAIL; \
+    } while (0)
 
-void crole_init_vec_size(crole_vec *vec, uint_fast16_t size);
+#define crole_in_bounds_vec(vec, pos) ((size_t)(pos) < (vec).length)
 
-#define crole_init_vec(vec, type) crole_init_vec_size(vec, sizeof(type))
+#define crole_append_vec(vec, type, value, error) do { \
+        if ((vec).length == (vec).allocated) { \
+            (vec).allocated *= 2; \
+            crole_resize_array_vec(vec, type, error); \
+        } \
+        (vec).array[(vec).length++] = value; \
+    } while (0)
 
-void crole_append_ptr_vec(crole_vec *vec, void *val_ptr);
+#define crole_get_unchecked_vec(vec, pos) ((vec).array[pos])
 
-#define crole_append_vec(vec, type, value) crole_append_ptr_vec(vec, &(type){value})
+#define crole_get_vec(vec, type, pos, error) \
+    (crole_in_bounds_vec(vec, pos) ? \
+        crole_get_unchecked_vec(vec, pos) \
+    : \
+        (type)crole_set_vec_err(&error, CROLE_VEC_OUT_OF_BOUNDS))
 
-void *crole_get_ptr_vec(crole_vec *vec, size_t position);
+#define crole_get_ptr_unchecked_vec(vec, pos) ((vec).array + pos)
 
-void crole_get_vec(crole_vec *vec, size_t position, void *out_ptr);
+#define crole_get_ptr_vec(vec, type, pos, error) \
+    (crole_in_bounds_vec(vec, pos) ? \
+        crole_get_ptr_unchecked_vec(vec, pos) \
+    : \
+        (type)crole_set_vec_err(&error, CROLE_VEC_OUT_OF_BOUNDS))
 
-void crole_set_ptr_vec(crole_vec *vec, size_t position, void *val_ptr);
+#define crole_set_unchecked_vec(vec, pos, value) do { \
+        (vec).array[pos] = (value); \
+    } while (0)
 
-#define crole_set_vec(vec, type, position, value) crole_set_ptr_vec(vec, position, &(type){value})
+#define crole_set_vec(vec, type, pos, value, error) do { \
+        if (crole_in_bounds_vec(vec, pos)) { \
+            crole_set_vec(vec, pos, value); \
+            crole_reset_vec_err(error); \
+        } else \
+            error = CROLE_VEC_OUT_OF_BOUNDS; \
+    } while (0)
 
-void crole_pop_vec(crole_vec *vec);
+#define crole_destroy_vec(vec) do { \
+        free((vec).array); \
+    } while (0)
 
-void crole_shrink_vec(crole_vec *vec);
+#define crole_pop_unchecked_vec(vec) ((vec).array[--((vec).length)])
 
-void crole_destroy_vec(crole_vec *vec);
+#define crole_pop_vec(vec, type, error) \
+    ((vec).length != 0 ? \
+        crole_pop_unchecked_vec(vec) \
+    : \
+        (type)crole_set_vec_err(&error, CROLE_VEC_POP_EMPTY))
+
+#define crole_shrink_vec(vec, type, error) do { \
+        (vec).allocated = (vec).length; \
+        void *new_array = realloc((vec).array, sizeof(type) * (vec).allocated); \
+        if (new_array) \
+            (vec).array = new_array; \
+        else error = CROLE_VEC_MALLOC_FAIL; \
+    } while (0)
 
 #endif

@@ -44,7 +44,6 @@ crole_dllist_node *crole_new_dllist_node(uint_fast16_t size, void *val_ptr, crol
 
     memcpy(crole_get_val_dllist_node(node_ptr), val_ptr, size);
 
-    crole_reset_dllist_err(*error);
     return node_ptr;
 }
 
@@ -67,8 +66,6 @@ void crole_push_ptr_back_dllist(crole_dllist *list, void *val_ptr, crole_dllist_
 
     list->end = node;
     list->length++;
-
-    crole_reset_dllist_err(*error);
 }
 
 void crole_push_ptr_front_dllist(crole_dllist *list, void *val_ptr, crole_dllist_err *error)
@@ -90,8 +87,6 @@ void crole_push_ptr_front_dllist(crole_dllist *list, void *val_ptr, crole_dllist
 
     list->start = node;
     list->length++;
-
-    crole_reset_dllist_err(*error);
 }
 
 void crole_init_dllist_from_array_size(crole_dllist *list, uint_fast16_t elem_size, void *array, size_t length, crole_dllist_err *error)
@@ -109,8 +104,6 @@ void crole_init_dllist_from_array_size(crole_dllist *list, uint_fast16_t elem_si
             return;
         }
     }
-
-    crole_reset_dllist_err(*error);
 }
 
 void crole_destroy_dllist(crole_dllist *list)
@@ -144,7 +137,6 @@ crole_dllist_node *crole_get_node_dllist(crole_dllist *list, size_t pos, crole_d
         node = node->next;
     }
 
-    crole_reset_dllist_err(*error);
     return node;
 }
 
@@ -155,7 +147,6 @@ void *crole_get_ptr_dllist(crole_dllist *list, size_t pos, crole_dllist_err *err
         return NULL;
     }
 
-    crole_reset_dllist_err(*error);
     return crole_get_val_dllist_node(node);
 }
 
@@ -167,8 +158,6 @@ void crole_get_dllist(crole_dllist *list, size_t pos, void *out_val, crole_dllis
     }
 
     memcpy(out_val, node_content, list->size);
-
-    crole_reset_dllist_err(*error);
 }
 
 void crole_insert_ptr_dllist(crole_dllist *list, size_t pos, void *val, crole_dllist_err *error)
@@ -190,8 +179,6 @@ void crole_insert_ptr_dllist(crole_dllist *list, size_t pos, void *val, crole_dl
 
     orig_at_pos->prev = new_node;
     before_pos->next = new_node;
-
-    crole_reset_dllist_err(*error);
 }
 
 void crole_pop_back_dllist(crole_dllist *list, crole_dllist_err *error)
@@ -208,7 +195,6 @@ void crole_pop_back_dllist(crole_dllist *list, crole_dllist_err *error)
 
         list->length--;
         free(node);
-        crole_reset_dllist_err(*error);
 
     } else {
         *error = CROLE_DLLIST_POP_EMPTY;
@@ -229,7 +215,6 @@ void crole_pop_front_dllist(crole_dllist *list, crole_dllist_err *error)
         
         list->length--;
         free(node);
-        crole_reset_dllist_err(*error);
 
     } else {
         *error = CROLE_DLLIST_POP_EMPTY;
@@ -260,8 +245,6 @@ void crole_remove_dllist(crole_dllist *list, size_t pos, void *out_val, crole_dl
 
         free(node);
     }
-
-    crole_reset_dllist_err(*error);
 }
 
 crole_dllist_iter crole_iter_dllist(crole_dllist *list)

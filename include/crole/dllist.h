@@ -101,7 +101,7 @@ void crole_insert_ptr_dllist(crole_dllist *list, size_t pos, void *val, crole_dl
 // Remove value from dllist at pos, optionally copying it to out_val if it is not NULL
 void crole_remove_dllist(crole_dllist *list, size_t pos, void *out_val, crole_dllist_err *error);
 
-typedef struct dllist_iter {
+typedef struct crole_dllist_iter {
     crole_dllist_node *cur;
     crole_dllist_node *end;
 } crole_dllist_iter;
@@ -126,16 +126,18 @@ crole_dllist_iter crole_rev_iter_dllist(crole_dllist *list);
 
 // A block that is excuted once for each node in a dllist,
 // with var assigned to a pointer to the current node's value
+// Note that a variable named "var_iter" will be created outsize the for loop
 #define crole_foreach_dllist(list, type, var) \
-        crole_dllist_iter var##_iter = crole_iter_dllist(list); \
-        for (type *var = crole_get_iter_dllist(var##_iter, type); crole_more_iter_dllist(var##_iter); \
-            crole_next_iter_dllist(var##_iter), var = crole_get_iter_dllist(var##_iter, type))
+    crole_dllist_iter var##_iter = crole_iter_dllist(list); \
+    for (type *var = crole_get_iter_dllist(var##_iter, type); crole_more_iter_dllist(var##_iter); \
+        crole_next_iter_dllist(var##_iter), var = crole_get_iter_dllist(var##_iter, type))
 
 // A block that is excuted once for each node in a dllist in reverse,
 // with var assigned to a pointer to the current node's value
+// Note that a variable named "var_iter" will be created outsize the for loop
 #define crole_foreach_reverse_dllist(list, type, var) \
-        crole_dllist_iter var##_iter = crole_rev_iter_dllist(list); \
-        for (type *var = crole_get_iter_dllist(var##_iter, type); crole_more_iter_dllist(var##_iter); \
-            crole_next_rev_iter_dllist(var##_iter), var = crole_get_iter_dllist(var##_iter, type))
+    crole_dllist_iter var##_iter = crole_rev_iter_dllist(list); \
+    for (type *var = crole_get_iter_dllist(var##_iter, type); crole_more_iter_dllist(var##_iter); \
+        crole_next_rev_iter_dllist(var##_iter), var = crole_get_iter_dllist(var##_iter, type))
 
 #endif

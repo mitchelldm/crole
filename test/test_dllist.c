@@ -106,6 +106,7 @@ void test_push_front_dllist()
     test_section("Push value to front of crole_dllist");
 
     crole_dllist_err error;
+    crole_reset_dllist_err(error);
     crole_dllist list;
     crole_init_dllist(&list, int);
 
@@ -129,6 +130,7 @@ void test_init_dllist_from_array_size()
     test_section("Init crole_dllist from array");
 
     crole_dllist_err error;
+    crole_reset_dllist_err(error);
     crole_dllist list;
 
     int numbers[7] = { 0, 1, 2, 3, 4, 5, 6 };

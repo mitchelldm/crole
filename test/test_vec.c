@@ -6,28 +6,32 @@
 
 #include "tests.h"
 
+crole_declare_vec(int);
+
 void test_vec_actions()
 {
     test_section("Vectors - temporary tests");
 
-    crole_vec vec;
-    crole_init_vec(&vec, int);
+    crole_vec_err error;
+    crole_reset_vec_err(error);
 
-    crole_append_vec(&vec, int, 14);
-    crole_append_vec(&vec, int, 20);
+    crole_vec_int vec;
+    crole_init_vec(vec, int, error);
+
+    crole_append_vec(vec, int, 14, error);
+    crole_append_vec(vec, int, 20, error);
 
     test_assert("Length is correct", vec.length == 2);
-    test_assert("Allocated amount is correct", vec.allocated == 3);
+    test_assert("Allocated amount is correct", vec.allocated == 2);
 
-    crole_append_vec(&vec, int, 9);
-    crole_append_vec(&vec, int, 24);
+    crole_append_vec(vec, int, 9, error);
+    crole_append_vec(vec, int, 24, error);
 
-    test_assert("Allocated amount doubles on full", vec.allocated == 6);
-    int out;
-    crole_get_vec(&vec, 2, &out);
+    test_assert("Allocated amount doubles on full", vec.allocated == 4);
+    int out = crole_get_vec(vec, int, 2, error);
     test_assert("Correct value at index", out == 9);
 
-    crole_pop_vec(&vec);
+    crole_pop_vec(vec, int, error);
     test_assert("Popping shortens vec", vec.length == 3);
 }
 
