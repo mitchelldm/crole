@@ -20,6 +20,7 @@ configuration:
 
 init:
   - cmd: git config --global core.autocrlf input
+  - cmd: cd C:\projects\crole
   - cmd: git submodule update --init --recursive
 
 before_build:
