@@ -27,4 +27,5 @@ build:
   verbosity: quiet
 
 test_script:
+  - tree C:\projects\crole\build
   - C:\projects\crole\build\test\crole-test.exe

@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/mitchelldm/crole.svg)](https://travis-ci.org/mitchelldm/crole)
+[![Build Status](https://ci.appveyor.com/api/projects/status/7j4137grpgy06h8t?svg=true)](https://ci.appveyor.com/project/mitchelldm/crole)
+
 # Crole
 Generic library of data structures and convenience functions for C.
 
