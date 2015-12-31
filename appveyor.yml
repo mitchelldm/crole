@@ -19,9 +19,8 @@ configuration:
   - Release
 
 init:
-  - git config --global core.autocrlf input
-  - cmd: cmake --version
-  - cmd: msbuild /version
+  - cmd: git config --global core.autocrlf input
+  - cmd: git submodule update --init --recursive
 
 before_build:
   - cmd: cd C:\projects\crole
