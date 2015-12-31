@@ -6,7 +6,12 @@
 #define CROLE_REF_H
 
 #include <stdint.h>
-#include <tinycthread.h>
+
+#if defined _WIN32 || _WIN64
+#   define WIN32_LEAN_AND_MEAN
+#   include <Windows.h>
+#   define CROLE_REF_WINDOWS
+#endif
 
 // crole_ref is threadsafe and so may be passed to multiple threads freely,
 // however it does not automatically make the value it contains threadsafe.
@@ -14,8 +19,11 @@
 typedef struct crole_ref {
     void (*destructor)(void *);
     void *value;
-    uint_fast16_t ref_count;
-	mtx_t lock;
+#ifdef CROLE_REF_WINDOWS
+    uint_fast32_t ref_count;
+#else
+    _Atomic uint_fast32_t ref_count;
+#endif
 } crole_ref;
 
 // Initialise a reference. Pointer points to memory to manage, destructor
