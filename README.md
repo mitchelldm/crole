@@ -12,25 +12,8 @@ Currently contains
 #### The name?
 Generated using [this](http://mrsharpoblunto.github.io/foswig.js) name generator.
 
-# Building
-
-## Linux
-
-`scons` to build
-
-`scons test` to build and run tests
-
-`scons bench` to build and run benchmarks
-
-Specifiy `mode=release` to build an optimised build
-
-GCC 5.3 and Clang 3.7 are supported
-
-## Windows
-
-Use proj/vs/crole.sln
-
-Visual Studio 2015 is supported
+# Building and testing
+Build using CMake. Crole will built as a static library, tests will be built in `crole-test`.
 
 # License
 Crole is licensed under the Mozilla Public License v2, meaning you can use it in open source or proprietary programs provided you publish modifications made to Crole.
