@@ -20,6 +20,7 @@ before_install:
   - if [ ${CC} == "clang" ]; then
     export CC=/usr/bin/clang-3.7 CXX=/usr/bin/clang++-3.7;
     fi
+  - sudo apt-get -y install tree
 
 compiler:
   - gcc
@@ -33,4 +34,5 @@ before_script:
 script: make
 
 after_success:
+  - tree .
   - build/test/crole-test
