@@ -10,10 +10,6 @@ os: Visual Studio 2015
 
 clone_folder: C:\projects\crole
 
-configuration:
-  - Debug
-  - Release
-
 init:
   - cmd: git config --global core.autocrlf input
   - cmd: cd C:\projects\crole
@@ -23,9 +19,7 @@ before_build:
   - cmd: git submodule update --init --recursive
   - cmd: mkdir build
   - cmd: cd build
-  - cmd: if "%platform%"=="x86" set CMAKE_GENERATOR_NAME=Visual Studio 14 2015
-  - cmd: if "%platform%"=="x64" set CMAKE_GENERATOR_NAME=Visual Studio 14 2015 Win64
-  - cmd: cmake .. -G "%CMAKE_GENERATOR_NAME%"
+  - cmd: cmake .. -G "Visual Studio 14 2015"
 
 build:
   project: C:\projects\crole\build\crole.sln
