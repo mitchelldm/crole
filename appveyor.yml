@@ -29,7 +29,8 @@ before_build:
   - cmd: cd build
   - cmd: if "%platform%"=="x86" set CMAKE_GENERATOR_NAME=Visual Studio 14 2015
   - cmd: if "%platform%"=="x64" set CMAKE_GENERATOR_NAME=Visual Studio 14 2015 Win64
-  - cmd: cmake .. -G "%CMAKE_GENERATOR_NAME%" -DCMAKE_BUILD_TYPE=%configuration%
+  - cmd: set CMAKE_BUILD_CONFIG_TYPE=-DCMAKE_BUILD_TYPE=%configuration%
+  - cmd: cmake .. -G "%CMAKE_GENERATOR_NAME%" %CMAKE_BUILD_CONFIG_TYPE%
 
 build:
   project: C:\projects\crole\build\crole.sln
