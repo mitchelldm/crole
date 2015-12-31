@@ -2,7 +2,7 @@ version: 0.1.{build}
 
 branches:
   except:
-    gh-pages
+    - gh-pages
 
 skip_tags: true
 
