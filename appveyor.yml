@@ -21,10 +21,10 @@ configuration:
 init:
   - cmd: git config --global core.autocrlf input
   - cmd: cd C:\projects\crole
-  - cmd: git submodule update --init --recursive
 
 before_build:
   - cmd: cd C:\projects\crole
+  - cmd: git submodule update --init --recursive
   - cmd: mkdir build
   - cmd: cd build
   - cmd: if "%platform%"=="x86" set CMAKE_GENERATOR_NAME=Visual Studio 14 2015
