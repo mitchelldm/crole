@@ -4,8 +4,11 @@ project(crole)
 find_package(Threads)
 
 set(crole_srcs
+    include/crole/vec.h
     src/vec.c
+    include/crole/dllist.h
     src/dllist.c
+    include/crole/ref.h
     src/ref.c
     external/tinycthread/source/tinycthread.c)
 

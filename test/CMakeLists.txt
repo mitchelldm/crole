@@ -1,4 +1,5 @@
 set(crole_test_srcs
+    include/tests.h
     src/main.c
     src/test_vec.c
     src/test_dllist.c
