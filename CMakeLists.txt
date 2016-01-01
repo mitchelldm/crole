@@ -9,10 +9,9 @@ set(crole_srcs
     include/crole/dllist.h
     src/dllist.c
     include/crole/ref.h
-    src/ref.c
-    external/tinycthread/source/tinycthread.c)
+    src/ref.c)
 
-include_directories(include external/tinycthread/source)
+include_directories(include)
 add_library(crole STATIC ${crole_srcs})
 target_link_libraries(crole ${CMAKE_THREAD_LIBS_INIT})
 
