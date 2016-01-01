@@ -30,7 +30,7 @@ uint64_t tests_failed;
 #define test_assert(test_name, expression) do { \
         if (!(expression)) { \
             printf(ANSI_COLOUR_RED "\tFailed: %s - assertion (%s) in %s (%s:%d)\n" ANSI_COLOUR_RESET, \
--                test_name, #expression, __func__, __FILENAME__, __LINE__); \
+                test_name, #expression, __func__, __FILENAME__, __LINE__); \
             tests_failed++; \
         } else { \
             printf(ANSI_COLOUR_GREEN "\tPassed: %s\n" ANSI_COLOUR_RESET, test_name); \

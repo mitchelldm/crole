@@ -33,6 +33,7 @@ void test_push_ptr_back_dllist()
     test_section("Push value to back of crole_dllist from pointer");
 
     crole_dllist_err error;
+    crole_reset_dllist_err(error);
     crole_dllist list;
     crole_init_dllist(&list, int);
 
@@ -58,6 +59,7 @@ void test_push_back_dllist()
     test_section("Push value to back of crole_dllist");
 
     crole_dllist_err error;
+    crole_reset_dllist_err(error);
     crole_dllist list;
     crole_init_dllist(&list, int);
 
@@ -81,6 +83,7 @@ void test_push_ptr_front_dllist()
     test_section("Push value to front of crole_dllist from pointer");
 
     crole_dllist_err error;
+    crole_reset_dllist_err(error);
     crole_dllist list;
     crole_init_dllist(&list, int);
 
