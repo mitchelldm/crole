@@ -6,6 +6,8 @@ branches:
 
 skip_tags: true
 
+platform: x64
+
 os: Visual Studio 2015
 
 clone_folder: C:\projects\crole
@@ -19,7 +21,7 @@ before_build:
   - cmd: git submodule update --init --recursive
   - cmd: mkdir build
   - cmd: cd build
-  - cmd: cmake .. -G "Visual Studio 14 2015"
+  - cmd: cmake .. -G "Visual Studio 14 2015 Win64"
 
 build:
   project: C:\projects\crole\build\crole.sln
