@@ -51,7 +51,7 @@ char crole_set_vec_err(crole_vec_err *error, crole_vec_err err_type);
 
 #define crole_append_vec(vec, type, value, error) do { \
         if ((vec).length == (vec).allocated) { \
-            (vec).allocated *= 2; \
+            (vec).allocated *= 1.5; \
             crole_resize_array_vec(vec, type, error); \
         } \
         (vec).array[(vec).length++] = value; \
