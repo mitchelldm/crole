@@ -80,7 +80,6 @@ char crole_set_vec_err(crole_vec_err *error, crole_vec_err err_type);
 #define crole_set_vec(vec, type, pos, value, error) do { \
         if (crole_in_bounds_vec(vec, pos)) { \
             crole_set_vec(vec, pos, value); \
-            crole_reset_vec_err(error); \
         } else \
             error = CROLE_VEC_OUT_OF_BOUNDS; \
     } while (0)
