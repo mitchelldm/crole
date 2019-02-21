@@ -9,9 +9,6 @@ Currently contains
   * A type-generic reference counter
   * A type-generic vector
 
-#### The name?
-Generated using [this](http://mrsharpoblunto.github.io/foswig.js) name generator.
-
 # Building and testing
 Build using CMake. Crole will built as a static library, tests will be built in `crole-test`.
 
